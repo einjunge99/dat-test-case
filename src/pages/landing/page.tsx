@@ -15,6 +15,7 @@ const categories = Object.keys(POSITIONS).map((key) =>
 export const Landing = () => {
   const positions = useStore(model.$positions);
   const handlePageMount = useEvent(model.pageMounted);
+  const handleTogglePosition = useEvent(model.togglePosition);
 
   useEffect(() => {
     handlePageMount();
@@ -24,13 +25,14 @@ export const Landing = () => {
     <div>
       {categories.map((category) => (
         <div>
-          {category.map((position) => (
+          {category.map((label) => (
             <div
+              onClick={() => handleTogglePosition(label)}
               style={{
-                color: positions.includes(position) ? "red" : "",
+                color: positions.includes(label) ? "red" : "",
               }}
             >
-              {position}
+              {label}
             </div>
           ))}
         </div>
