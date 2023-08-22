@@ -3,7 +3,6 @@ import * as model from "./model";
 import { useEffect } from "react";
 import { IPluginOptions } from "../../App";
 import { Shape } from "../../components/elements/shape";
-import car from "../../../public/car.png";
 import styles from "./landing.module.scss";
 
 const POSITIONS: { [key: string]: number } = {
@@ -41,7 +40,7 @@ export const Landing: React.FC<IProps> = ({ options }) => {
 
   return (
     <div className={styles.container}>
-      <img src={car} />
+      <img src={"https://i.ibb.co/9VDdHMf/car.png"} />
       <div className={styles.positions}>
         {categories.map((category, index) => (
           <div key={index} className={styles.category}>
