@@ -2,6 +2,9 @@ import { useEvent, useStore } from "effector-react";
 import * as model from "./model";
 import { useEffect } from "react";
 import { IPluginOptions } from "../../App";
+import { Shape } from "../../components/elements/shape";
+import car from "../../../public/car.png";
+import styles from "../../styles/landing.module.scss";
 
 const POSITIONS: { [key: string]: number } = {
   A: 4,
@@ -37,22 +40,23 @@ export const Landing: React.FC<IProps> = ({ options }) => {
   }, [handlePageMount, options]);
 
   return (
-    <div>
-      {categories.map((category, index) => (
-        <div key={index}>
-          {category.map((label) => (
-            <div
-              key={label}
-              onClick={() => handleTogglePosition(label)}
-              style={{
-                color: positions.includes(label) ? "red" : "",
-              }}
-            >
-              {label}
-            </div>
-          ))}
-        </div>
-      ))}
+    <div className={styles.container}>
+      <img src={car} />
+      <div className={styles.positions}>
+        {categories.map((category, index) => (
+          <div key={index} className={styles.category}>
+            {category.map((label) => (
+              <div
+                className={styles.overlayItem}
+                key={label}
+                onClick={() => handleTogglePosition(label)}
+              >
+                <Shape filled={positions.includes(label)} />
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
