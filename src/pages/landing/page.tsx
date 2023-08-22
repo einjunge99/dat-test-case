@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { IPluginOptions } from "../../App";
 import { Shape } from "../../components/elements/shape";
 import car from "../../../public/car.png";
-import styles from "../../styles/landing.module.scss";
+import styles from "./landing.module.scss";
 
 const POSITIONS: { [key: string]: number } = {
   A: 4,
