@@ -1,7 +1,14 @@
 import { createEffect } from "effector";
 
-export const fetchPositions = createEffect<void, string[], unknown>(() =>
-  fetch("https://myfailemtions.npkn.net/b944ff/").then((req) => req.json())
+export const fetchPositions = createEffect<void, string[], unknown>((params) =>
+  fetch("https://myfailemtions.npkn.net/b944ff/").then((req) => {
+    return req.json().then((rawPositions: string[]) => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      const uniquePositions = new Set([...rawPositions, ...params]);
+      return Array.from(uniquePositions);
+    });
+  })
 );
 
 export const updateActivePositions = createEffect<void, string[], unknown>(

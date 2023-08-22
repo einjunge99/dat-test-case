@@ -3,7 +3,7 @@ import { positionsApi } from "../../shared/api";
 
 export const $positions = createStore<string[]>([]);
 
-export const pageMounted = createEvent();
+export const pageMounted = createEvent<string[]>();
 
 export const togglePosition = createEvent<string>();
 
