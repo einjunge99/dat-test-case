@@ -1,7 +1,7 @@
 import { createEvent, createStore, sample } from "effector";
 import { positionsApi } from "../../shared/api";
 
-export const $positions = createStore<string[]>([]);
+export const $positions = createStore<string[] | null>(null);
 
 export const pageMounted = createEvent<string[]>();
 
@@ -16,10 +16,10 @@ sample({
   clock: togglePosition,
   source: $positions,
   fn: (positions, label) => {
-    if (positions.includes(label)) {
+    if (positions?.includes(label)) {
       return positions.filter((position) => position !== label);
     }
-    return [...positions, label];
+    return [...(positions || []), label];
   },
   target: positionsApi.updateActivePositions,
 });

@@ -1,6 +1,6 @@
 import { useEvent, useStore } from "effector-react";
 import * as model from "./model";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { IPluginOptions } from "../../App";
 import { Shape } from "../../components/elements/shape";
 import styles from "./landing.module.scss";
@@ -23,13 +23,23 @@ export const Landing: React.FC<IProps> = ({ options }) => {
   const positions = useStore(model.$positions);
   const handlePageMount = useEvent(model.pageMounted);
   const handleTogglePosition = useEvent(model.togglePosition);
+  const prevPositionsRef = useRef<string[] | null>();
 
   useEffect(() => {
-    const { onPositionChange } = options;
-    if (!onPositionChange) {
+    if (positions == null) {
       return;
     }
-    onPositionChange(positions);
+    if (!prevPositionsRef.current) {
+      prevPositionsRef.current = positions;
+      return;
+    }
+    const { onPositionChange, onComplete } = options;
+    const isCompleted = prevPositionsRef.current?.length > positions.length;
+    if (isCompleted) {
+      onComplete && onComplete(positions);
+    }
+    onPositionChange && onPositionChange(positions);
+    prevPositionsRef.current = positions;
   }, [options, positions]);
 
   useEffect(() => {
@@ -50,7 +60,7 @@ export const Landing: React.FC<IProps> = ({ options }) => {
                 key={label}
                 onClick={() => handleTogglePosition(label)}
               >
-                <Shape filled={positions.includes(label)} />
+                <Shape filled={positions?.includes(label) || false} />
               </div>
             ))}
           </div>
