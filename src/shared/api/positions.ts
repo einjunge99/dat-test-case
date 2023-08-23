@@ -1,7 +1,8 @@
 import { createEffect } from "effector";
+import { API_DOMAIN } from "../../constants/environment";
 
 export const fetchPositions = createEffect<void, string[], unknown>((params) =>
-  fetch("https://myfailemtions.npkn.net/b944ff/").then((req) => {
+  fetch(API_DOMAIN).then((req) => {
     return req.json().then((rawPositions: string[]) => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -13,7 +14,7 @@ export const fetchPositions = createEffect<void, string[], unknown>((params) =>
 
 export const updateActivePositions = createEffect<void, string[], unknown>(
   (params) =>
-    fetch("https://myfailemtions.npkn.net/b944ff/", {
+    fetch(API_DOMAIN, {
       method: "POST",
       body: JSON.stringify(params),
       headers: {
